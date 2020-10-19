@@ -27,15 +27,17 @@ public class RedBlackTree<T extends Comparable<T>> {
    */
   protected static class Node<T> {
     public T data;
-    public String name;
+    public String name;    
+    public String team;
     public Node<T> parent; // null for root node
     public Node<T> leftChild;
     public Node<T> rightChild;
     public boolean isBlack;
 
-    public Node(T data, String name) {
+    public Node(T data, String name, String team) {
       this.data = data;
       this.name = name;
+      this.team = team;
       isBlack = false;
     }
 
