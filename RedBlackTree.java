@@ -7,6 +7,10 @@
 // Lecturer: Gary Dahl
 // Notes to Grader: Hello World!
 
+/**
+ * @author Luke Breyer
+ */
+
 import java.util.LinkedList;
 import org.junit.Test;
 import static org.junit.Assert.*;
