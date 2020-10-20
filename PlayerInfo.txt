@@ -2,7 +2,7 @@ Anthony Davis LAL 582
 LeBron James LAL 580
 Jamal Murray DEN 504
 Jimmy Butler MIA 467
-Nikola Jokić DEN 464
+Nikola Jokic DEN 464
 Jayson Tatum BOS 437
 Jaylen Brown BOS 370
 Kawhi Leonard LAC 367
@@ -10,7 +10,7 @@ James Harden HOU 355
 Bam Adebayo MIA 338
 Tyler Herro MIA 335
 Kemba Walker BOS 334
-Goran Dragić MIA 324
+Goran Dragic MIA 324
 Paul George LAC 263
 Donovan Mitchell UTA 254
 Jae Crowder MIA 252
@@ -26,7 +26,7 @@ Eric Gordon HOU 208
 Khris Middleton MIL 203
 Kyle Lowry TOR 195
 Pascal Siakam TOR 187
-Luka Dončić DAL 186
+Luka Doncic DAL 186
 Monte Morris DEN 172
 Danny Green LAL 167
 Lou Williams LAC 166
@@ -39,14 +39,14 @@ Chris Paul OKC 149
 Norman Powell TOR 147
 Rajon Rondo LAL 143
 Russell Westbrook HOU 143
-Nikola Vučević ORL 140
+Nikola Vucevic ORL 140
 Jeff Green HOU 139
 Alex Caruso LAL 137
 Montrezl Harrell LAC 136
 Robert Covington HOU 134
 Kelly Olynyk MIA 130
 Markieff Morris LAL 124
-Dennis Schröder OKC 121
+Dennis SchrÃ¶der OKC 121
 Joel Embiid PHI 120
 Rudy Gobert UTA 118
 Ivica Zubac LAC 118
@@ -79,9 +79,9 @@ Luguentz Dort OKC 75
 Trey Burke DAL 74
 Wesley Matthews MIL 72
 Steven Adams OKC 71
-Jusuf Nurkić POR 71
+Jusuf Nurkic POR 71
 Victor Oladipo IND 71
-Kristaps Porziņģis DAL 71
+Kristaps PorziÅ†Ä£is DAL 71
 Landry Shamet LAC 68
 Josh Richardson PHI 67
 D.J. Augustin ORL 66
@@ -89,7 +89,7 @@ Donte DiVincenzo MIL 66
 Marc Gasol TOR 66
 Evan Fournier ORL 64
 Joe Ingles UTA 64
-Timothé Luwawu-Cabarrot BRK 64
+Timothe Luwawu-Cabarrot BRK 64
 Tobias Harris PHI 63
 Myles Turner IND 63
 Kyle Korver MIL 62
@@ -114,7 +114,7 @@ Ben McLemore HOU 44
 Terence Davis TOR 43
 Alec Burks PHI 42
 Jarrett Allen BRK 41
-Boban Marjanović DAL 41
+Boban MarjanoviÄ‡ DAL 41
 JaVale McGee LAL 41
 Pat Connaughton MIL 40
 Maxi Kleber DAL 40
@@ -149,7 +149,7 @@ Rondae Hollis-Jefferson TOR 14
 Talen Horton-Tucker LAL 14
 Michael Kidd-Gilchrist DAL 14
 Meyers Leonard MIA 14
-Džanan Musa BRK 14
+DÅ¾anan Musa BRK 14
 Quinn Cook LAL 13
 Hamidou Diallo OKC 13
 Stanley Johnson TOR 13
@@ -161,7 +161,7 @@ Doug McDermott IND 10
 Juwan Morgan UTA 10
 Dion Waiters LAL 10
 Tony Bradley UTA 9
-Ersan İlyasova MIL 9
+Ersan Ilyasova MIL 9
 Patrick Patterson LAC 9
 Chris Boucher TOR 8
 Rodney McGruder LAC 8

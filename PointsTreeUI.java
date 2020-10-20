@@ -43,16 +43,17 @@ public class PointsTreeUI {
 
 	/**
 	 * Displays all the players in the Red-Black Tree, after a user inputs the
-	 * command (D). Makes use of the tree's toString() method.
+	 * command (D). Makes use of the tree's search() method.
 	 */
+	@SuppressWarnings("unchecked")
 	public static void displayPlayers() {
 		for (int i = 0; i < 80; i++) {
 			System.out.print("-");
 		}
 
 		try {
-			System.out.println("\nDisplaying all Players...");
-			tree.toString();
+			System.out.println("\nDisplaying all Players...\n[NAME / TEAM / POINTS]\n");
+			tree.searchPrint(tree.root);
 		} catch (NullPointerException e) {
 			System.out.println("There are no Players in the database.");
 			return;
