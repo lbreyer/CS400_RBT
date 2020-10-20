@@ -11,7 +11,7 @@
  * @author Luke Breyer
  */
 
-public class RBTRemove<T extends Comparable<T>> extends RedBlackTree<T> {
+public class RBTExtension<T extends Comparable<T>> extends RedBlackTree<T> {
 
   /**
    * Performs a deletion from a red-black tree: removes the node with the desired name field from
