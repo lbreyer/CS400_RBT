@@ -7,6 +7,10 @@
 // Lecturer: Gary Dahl
 // Notes to Grader: N/A
 
+/**
+ * @author Matthew Thompson Soto
+ */
+
 import java.util.Scanner;
 
 /**
