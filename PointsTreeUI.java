@@ -47,18 +47,58 @@ public class PointsTreeUI {
 	 */
 	@SuppressWarnings("unchecked")
 	public static void display(Scanner scnr) {
+		boolean pass = false;
+		char selection = 0;
+		
 		for (int i = 0; i < 80; i++) {
 			System.out.print("-");
 		}
-
-		try {
-			System.out.println("\nDisplaying all Players...\n[NAME / TEAM / POINTS]\n");
-			tree.searchPrint(tree.root);
-		} catch (NullPointerException e) {
-			System.out.println("There are no Players in the database.");
-			return;
+		
+		System.out.println("\n---==+ Display Player Information +==---");
+		
+		while (!pass) {
+			System.out.println("Would you like to display (A) all players or sort by (T) team?\nEnter (A) for all, (T) for team: ");
+			selection = readChar(scnr);
+			if (selection == 'a' || selection == 't') { // Valid name entered
+				pass = true;
+				continue;
+			}
+			
+			System.out.println("Invalid name.");
 		}
+		
+		if (selection == 'a') {
+			try {
+				System.out.println("\nDisplaying all Players...\n[NAME / TEAM / POINTS]\n");
+				tree.searchPrint(tree.root, false, "");
+			} catch (NullPointerException e) {
+				System.out.println("There are no Players in the database.");
+				return;
+			}
+		} else {
+			System.out.println("What team would you like to search?");
+			pass = false;
+			String teamName = "";
+			
+			while (!pass) {
+				System.out.println("Please enter the desired team name to be looked up: ");
+				teamName = scnr.nextLine();
+				if (teamName.length() > 0) { // Valid name entered
+					pass = true;
+					continue;
+				}
+				System.out.println("Invalid team name.");
+			}
+			
+			try {
+				System.out.println("\nDisplaying all Players for " + teamName + "...\n[NAME / TEAM / POINTS]\n");
+				tree.searchPrint(tree.root, true, teamName);
+			} catch (NullPointerException e) {
+				System.out.println("There are no Players in the database.");
+				return;
+			}
 
+		}
 	}
 
 	/**
@@ -163,11 +203,17 @@ public class PointsTreeUI {
 			scnr.nextLine();
 			System.out.println("Invalid number of points.");
 		}
-
-		tree.insert(points, name, team); // Adds Player to the tree.
-		System.out
-				.println("Player " + name + " (" + team + ") has been added. They have scored " + points + " points.");
-		scnr.nextLine();
+		
+		try {
+			tree.insert(points, name, team); // Adds Player to the tree.
+			System.out
+					.println("Player " + name + " (" + team + ") has been added. They have scored " + points + " points.");
+			scnr.nextLine();
+		} catch (IllegalArgumentException e) {
+			System.out.println("The database already contains a player with "
+					+ "that amount of points. Score a bucket, " + name + "!");
+			scnr.nextLine();
+		}
 	}
 
 	/**

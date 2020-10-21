@@ -151,12 +151,12 @@ public class RBTExtension<T extends Comparable<T>> extends RedBlackTree<T> {
 				root = opRep;
 			}
 		}
-		
+
 		if (opRepColor) { // If the removed node was a red leaf we do not have to balance, otherwise we
 							// call the enforcement method
 			enforceRBTreePropertiesAfterDelete(rep, repL);
 		}
-		
+
 		return returnNode;
 	}
 
@@ -175,8 +175,8 @@ public class RBTExtension<T extends Comparable<T>> extends RedBlackTree<T> {
 					sibling = node.parent.rightChild;
 				}
 				// Case 2: sibling is black with black children
-				if ((sibling.leftChild != null && sibling.leftChild.isBlack) &&
-						(sibling.rightChild != null && sibling.rightChild.isBlack)) {
+				if ((sibling.leftChild != null && sibling.leftChild.isBlack)
+						&& (sibling.rightChild != null && sibling.rightChild.isBlack)) {
 					sibling.isBlack = false;
 					node = node.parent;
 				} else {
@@ -265,16 +265,22 @@ public class RBTExtension<T extends Comparable<T>> extends RedBlackTree<T> {
 	 * @param name - name to search for an remove
 	 * @return Node<T> - The node removed or null if not present
 	 */
-	public void searchPrint(Node<T> node) {
+	public void searchPrint(Node<T> node, boolean teamSearch, String teamName) {
 		if (node == null) {
 			return;
 		}
 
-		searchPrint(node.rightChild);
+		searchPrint(node.rightChild, teamSearch, teamName);
 
-		System.out.println("- " + node.name + " (" + node.team + "): " + node.data);
+		if (teamSearch) {
+			if (node.team.equals(teamName)) {
+				System.out.println("- " + node.name + " (" + node.team + "): " + node.data);
+			}
+		} else {
+			System.out.println("- " + node.name + " (" + node.team + "): " + node.data);
+		}
 
-		searchPrint(node.leftChild);
+		searchPrint(node.leftChild, teamSearch, teamName);
 	}
 
 }
