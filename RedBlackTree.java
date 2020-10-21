@@ -1,15 +1,15 @@
 // --== CS400 File Header Information ==--
-// Name: Vedant Sagar
-// Email: vsagar@wisc.edu
+// Name: Luke Breyer
+// Email: lbreyer@wisc.edu
 // Team: KF
-// Role: Test Engineer
+// Role: Back End Developer
 // TA: Sid Mohan
 // Lecturer: Gary Dahl
-// Notes to Grader: Namaste Brother
+// Notes to Grader: Hello World!
 
 /**
  *
- * @author Vedant Sagar
+ * @author Luke Breyer
  */
 import java.util.LinkedList;
 
