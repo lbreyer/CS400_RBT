@@ -34,12 +34,9 @@ public class RBTExtension<T extends Comparable<T>> extends RedBlackTree<T> {
 			remove = search(root, name);
 
 			if (remove != null) {
-				if (remove.parent == null) {
-					root = null;
-				} else {
-					deleteHelper(name);
-				}
+				deleteHelper(name);
 			}
+
 			return remove; // recursively insert into subtree
 		}
 	}
@@ -55,7 +52,7 @@ public class RBTExtension<T extends Comparable<T>> extends RedBlackTree<T> {
 	 * @param nodeB - The node to transplant
 	 */
 	private void transplant(Node<T> nodeA, Node<T> nodeB) {
-		if (nodeA.parent == root) {
+		if (nodeA.parent == null) {
 			root = nodeB;
 		} else if (nodeA.isLeftChild()) {
 			nodeA.parent.leftChild = nodeB;
@@ -94,6 +91,7 @@ public class RBTExtension<T extends Comparable<T>> extends RedBlackTree<T> {
 		Node<T> returnNode = null;
 		Node<T> rep;
 		Node<T> opRep;
+		boolean repL = false;
 
 		// Search for node with given name
 		returnNode = search(root, name);
@@ -108,21 +106,28 @@ public class RBTExtension<T extends Comparable<T>> extends RedBlackTree<T> {
 		// If missing one child, must be able to replace node with other child (is
 		// either a node or null)
 		if (returnNode.leftChild == null) {
-			rep = returnNode.rightChild;
+			rep = returnNode;
+			repL = rep.isLeftChild();
 			transplant(returnNode, returnNode.rightChild);
+
+			if (returnNode.parent == null) {
+				root = returnNode.rightChild;
+			}
 		} else if (returnNode.rightChild == null) {
-			rep = returnNode.leftChild;
+			rep = returnNode;
+			repL = rep.isLeftChild();
 			transplant(returnNode, returnNode.leftChild);
+
+			if (returnNode.parent == null) {
+				root = returnNode.leftChild;
+			}
 		} else { // If it has both children, replace with minimum from right subtree
 			opRep = minimum(returnNode.rightChild);
 			opRepColor = opRep.isBlack;
-			System.out.println("Data for 4: " + opRep.data);
+			rep = opRep;
+			repL = rep.isLeftChild();
 
-			rep = opRep.rightChild; // THIS LINE
-
-			if (opRep.parent == returnNode) {
-				// Nothing
-			} else {
+			if (opRep.parent != returnNode) {
 				transplant(opRep, opRep.rightChild);
 				opRep.rightChild = returnNode.rightChild;
 				opRep.rightChild.parent = opRep;
@@ -132,29 +137,35 @@ public class RBTExtension<T extends Comparable<T>> extends RedBlackTree<T> {
 			opRep.leftChild = returnNode.leftChild;
 			opRep.leftChild.parent = opRep;
 			opRep.isBlack = returnNode.isBlack;
-			
+
 			if (returnNode.parent != null) {
 				opRep.parent = returnNode.parent;
-				
+
 				if (returnNode.isLeftChild()) { // Left side
-					returnNode.parent.leftChild = opRep;
+					opRep.parent.leftChild = opRep;
 				} else { // Right side
-					returnNode.parent.rightChild = opRep;
+					opRep.parent.rightChild = opRep;
 				}
+			} else {
+				opRep.parent = returnNode.parent;
+				root = opRep;
 			}
 		}
+		
 		if (opRepColor) { // If the removed node was a red leaf we do not have to balance, otherwise we
 							// call the enforcement method
-			enforceRBTreePropertiesAfterDelete(rep);
+			enforceRBTreePropertiesAfterDelete(rep, repL);
 		}
+		
 		return returnNode;
 	}
 
-	private void enforceRBTreePropertiesAfterDelete(Node<T> node) {
+	private void enforceRBTreePropertiesAfterDelete(Node<T> node, boolean repL) {
 		Node<T> sibling;
 		// Recursively work DB node up tree to the root position
+
 		while (node != root && node.isBlack) {
-			if (node.isLeftChild()) {
+			if (repL) {
 				sibling = node.parent.rightChild;
 				// Case 1: Sibling is Red
 				if (!sibling.isBlack) {
@@ -164,12 +175,13 @@ public class RBTExtension<T extends Comparable<T>> extends RedBlackTree<T> {
 					sibling = node.parent.rightChild;
 				}
 				// Case 2: sibling is black with black children
-				if (sibling.leftChild.isBlack && sibling.rightChild.isBlack) {
+				if ((sibling.leftChild != null && sibling.leftChild.isBlack) &&
+						(sibling.rightChild != null && sibling.rightChild.isBlack)) {
 					sibling.isBlack = false;
 					node = node.parent;
 				} else {
 					// Case 3A: Same side red child
-					if (sibling.rightChild.isBlack) {
+					if (sibling.rightChild == null || sibling.rightChild.isBlack) {
 						sibling.leftChild.isBlack = true;
 						sibling.isBlack = false;
 						rotate(sibling.leftChild, sibling);
@@ -197,7 +209,7 @@ public class RBTExtension<T extends Comparable<T>> extends RedBlackTree<T> {
 					node = node.parent;
 				} else {
 					// Case 3A: Same side red child
-					if (sibling.leftChild.isBlack) {
+					if (sibling.leftChild == null || sibling.leftChild.isBlack) {
 						sibling.rightChild.isBlack = true;
 						sibling.isBlack = false;
 						rotate(sibling.rightChild, sibling);
@@ -212,6 +224,7 @@ public class RBTExtension<T extends Comparable<T>> extends RedBlackTree<T> {
 				}
 			}
 		}
+
 		node.isBlack = true; // Set root to be black
 	}
 
@@ -260,10 +273,6 @@ public class RBTExtension<T extends Comparable<T>> extends RedBlackTree<T> {
 		searchPrint(node.rightChild);
 
 		System.out.println("- " + node.name + " (" + node.team + "): " + node.data);
-
-		if (node.parent != null) {
-			System.out.println("Parent: " + node.parent.name + " | Color: " + node.isBlack);
-		}
 
 		searchPrint(node.leftChild);
 	}

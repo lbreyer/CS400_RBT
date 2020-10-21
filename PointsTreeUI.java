@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class PointsTreeUI {
 	@SuppressWarnings("rawtypes")
-	private static RedBlackTree tree;
+	private static RBTExtension tree;
 
 	/**
 	 * Private helper method that reads input and returns a character.
@@ -46,7 +46,7 @@ public class PointsTreeUI {
 	 * command (D). Makes use of the tree's search() method.
 	 */
 	@SuppressWarnings("unchecked")
-	public static void displayPlayers() {
+	public static void display(Scanner scnr) {
 		for (int i = 0; i < 80; i++) {
 			System.out.print("-");
 		}
@@ -58,6 +58,7 @@ public class PointsTreeUI {
 			System.out.println("There are no Players in the database.");
 			return;
 		}
+
 	}
 
 	/**
@@ -241,7 +242,7 @@ public class PointsTreeUI {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		tree = new RedBlackTree<>();
+		tree = new RBTExtension<>();
 		Scanner scnr = new Scanner(System.in);
 		boolean quit = false;
 		boolean printMenu = true;
@@ -279,7 +280,7 @@ public class PointsTreeUI {
 				getPlayerInfo(scnr);
 				break;
 			case ('d'):
-				displayPlayers(); // Does not work currently
+				display(scnr); // Does not work currently
 				break;
 			case ('h'):
 				help();
