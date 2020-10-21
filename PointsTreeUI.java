@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class PointsTreeUI {
 	@SuppressWarnings("rawtypes")
-	private static RBTExtension tree;
+	private static RBTExtension<Player> tree;
 
 	/**
 	 * Private helper method that reads input and returns a character.
@@ -47,58 +47,17 @@ public class PointsTreeUI {
 	 */
 	@SuppressWarnings("unchecked")
 	public static void display(Scanner scnr) {
-		boolean pass = false;
-		char selection = 0;
-		
-		for (int i = 0; i < 80; i++) {
-			System.out.print("-");
-		}
-		
-		System.out.println("\n---==+ Display Player Information +==---");
-		
-		while (!pass) {
-			System.out.println("Would you like to display (A) all players or sort by (T) team?\nEnter (A) for all, (T) for team: ");
-			selection = readChar(scnr);
-			if (selection == 'a' || selection == 't') { // Valid name entered
-				pass = true;
-				continue;
-			}
-			
-			System.out.println("Invalid name.");
-		}
-		
-		if (selection == 'a') {
-			try {
-				System.out.println("\nDisplaying all Players...\n[NAME / TEAM / POINTS]\n");
-				tree.searchPrint(tree.root, false, "");
-			} catch (NullPointerException e) {
-				System.out.println("There are no Players in the database.");
-				return;
-			}
-		} else {
-			System.out.println("What team would you like to search?");
-			pass = false;
-			String teamName = "";
-			
-			while (!pass) {
-				System.out.println("Please enter the desired team name to be looked up: ");
-				teamName = scnr.nextLine();
-				if (teamName.length() > 0) { // Valid name entered
-					pass = true;
-					continue;
-				}
-				System.out.println("Invalid team name.");
-			}
-			
-			try {
-				System.out.println("\nDisplaying all Players for " + teamName + "...\n[NAME / TEAM / POINTS]\n");
-				tree.searchPrint(tree.root, true, teamName);
-			} catch (NullPointerException e) {
-				System.out.println("There are no Players in the database.");
-				return;
-			}
+	  for (int i = 0; i < 80; i++) {
+	      System.out.print("-");
+	    }
 
-		}
+	    try {
+	      System.out.println("\nDisplaying all Players...\n[NAME / TEAM / POINTS]\n");
+	      tree.searchPrint(tree.root);
+	    } catch (NullPointerException e) {
+	      System.out.println("There are no Players in the database.");
+	      return;
+	    }
 	}
 
 	/**
@@ -111,6 +70,8 @@ public class PointsTreeUI {
 	public static void getPlayerInfo(Scanner scnr) {
 		boolean pass = false;
 		String name = "";
+		// Dummy player to call RBTExtension's methods with
+		Player dummyPlayer = null;
 
 		for (int i = 0; i < 80; i++) {
 			System.out.print("-");
@@ -123,6 +84,7 @@ public class PointsTreeUI {
 			System.out.println("Please enter the desired Player's name to be looked up: ");
 			name = scnr.nextLine();
 			if (name.length() > 0) { // Valid name entered
+			  dummyPlayer = new Player(name, "", -1);
 				pass = true;
 				continue;
 			}
@@ -131,13 +93,13 @@ public class PointsTreeUI {
 
 		System.out.println("Looking up " + name + "'s information...");
 
-		if (tree.search(tree.root, name) == null) {
+		if (tree.search(tree.root, dummyPlayer) == null) {
 			System.out.println("Player " + name + " could not be found.");
 		} else {
 			System.out.println("Here is the information:");
-			System.out.println("Name: " + tree.search(tree.root, name).name);
-			System.out.println("Team: " + tree.search(tree.root, name).team);
-			System.out.println("Total Points Scored: " + tree.search(tree.root, name).data);
+			System.out.println("Name: " + tree.search(tree.root, dummyPlayer).data.getName());
+			System.out.println("Team: " + tree.search(tree.root, dummyPlayer).data.getTeam());
+			System.out.println("Total Points Scored: " + tree.search(tree.root, dummyPlayer).data.getPoints());
 		}
 	}
 
@@ -154,6 +116,7 @@ public class PointsTreeUI {
 		String name = "";
 		String team = "";
 		int points = 0;
+		Player insertPlayer = null;
 
 		for (int i = 0; i < 80; i++) {
 			System.out.print("-");
@@ -204,8 +167,9 @@ public class PointsTreeUI {
 			System.out.println("Invalid number of points.");
 		}
 		
+		insertPlayer = new Player(name, team, points);
 		try {
-			tree.insert(points, name, team); // Adds Player to the tree.
+			tree.insert(insertPlayer); // Adds Player to the tree.
 			System.out
 					.println("Player " + name + " (" + team + ") has been added. They have scored " + points + " points.");
 			scnr.nextLine();
@@ -227,6 +191,8 @@ public class PointsTreeUI {
 	public static void removePlayer(Scanner scnr) {
 		boolean pass = false;
 		String name = "";
+		// Dummy player to call RBTExtension's methods with
+		Player dummyPlayer = null;
 
 		for (int i = 0; i < 80; i++) {
 			System.out.print("-");
@@ -240,16 +206,17 @@ public class PointsTreeUI {
 			name = scnr.nextLine();
 			if (name.length() > 0) { // Valid name entered
 				pass = true;
+				dummyPlayer = new Player(name, "", -1);
 				continue;
 			}
 			System.out.println("Invalid name.");
 		}
 
 		System.out.println("Looking to delete " + name + "...");
-		if (tree.search(tree.root, name) == null) {
+		if (tree.search(tree.root, dummyPlayer) == null) {
 			System.out.println("Player " + name + " could not be found.");
 		} else {
-			tree.delete(name);
+			tree.delete(dummyPlayer);
 			System.out.println("Player " + name + " was succesfully deleted.");
 		}
 
@@ -288,7 +255,7 @@ public class PointsTreeUI {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		tree = new RBTExtension<>();
+		tree = new RBTExtension<Player>();
 		Scanner scnr = new Scanner(System.in);
 		boolean quit = false;
 		boolean printMenu = true;
